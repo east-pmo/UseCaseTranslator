@@ -1,0 +1,14 @@
+﻿################################################################################
+# この .gitignore ファイルは Microsoft(R) Visual Studio によって自動的に作成されました。
+################################################################################
+
+.suo
+*.user
+/packages
+/TestResults
+/UseCaseTranslator/bin
+/UseCaseTranslator/obj
+/UseCaseTranslator.Tests/bin
+/UseCaseTranslator.Tests/obj
+
+/Document

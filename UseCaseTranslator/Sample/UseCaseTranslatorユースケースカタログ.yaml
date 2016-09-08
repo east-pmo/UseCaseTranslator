@@ -1,0 +1,12 @@
+ユースケースシナリオカタログ: UseCaseTranslator
+シナリオセット: 
+  - UseCaseTranslatorユースケースシナリオセット - テストスイートExcelファイル.yaml
+  - UseCaseTranslatorユースケースシナリオセット - Markdown.yaml
+  - UseCaseTranslatorユースケースシナリオセット - その他.yaml
+更新履歴: 
+  第一版: 
+    更新日: 2016-07-27
+    概要: 作成。
+  第二版: 
+    更新日: 2016-08-19
+    概要: Markdownフォーマットユースケースドキュメント出力機能実装にあわせてシナリオセットを整理。
