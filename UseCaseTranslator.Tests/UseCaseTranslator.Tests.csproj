@@ -132,6 +132,12 @@
     <None Include="TestData\Reference.UseCaseTranslatorユースケースシナリオセット - テストスイートExcelファイル.md">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="TestData\無効YAML書式検証シナリオセット.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="TestData\無効ユースケースカタログ.yaml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="TestData\UseCaseTranslatorユースケースカタログ.yaml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

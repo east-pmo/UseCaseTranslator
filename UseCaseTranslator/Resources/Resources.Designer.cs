@@ -22,7 +22,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         ///   このクラスで使用されているキャッシュされた ResourceManager インスタンスを返します。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("East.Tool.UseCaseTranslator.Resources.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         ///   現在のスレッドの CurrentUICulture プロパティをオーバーライドします。
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Show help に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string CommandDescription_Help {
+        public static string CommandDescription_Help {
             get {
                 return ResourceManager.GetString("CommandDescription_Help", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Generate test suite Excel file. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string CommandDescription_TestSuite {
+        public static string CommandDescription_TestSuite {
             get {
                 return ResourceManager.GetString("CommandDescription_TestSuite", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Translate to Markdown formatted document. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string CommandDescription_UseCaseCatalog {
+        public static string CommandDescription_UseCaseCatalog {
             get {
                 return ResourceManager.GetString("CommandDescription_UseCaseCatalog", resourceCulture);
             }
@@ -90,16 +90,34 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   シナリオセットファイル{0}の書式に誤りがあります。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Exception_Format_InvalidScenarioSetFileFormat {
+        public static string Exception_Format_InvalidScenarioSetFileFormat {
             get {
                 return ResourceManager.GetString("Exception_Format_InvalidScenarioSetFileFormat", resourceCulture);
             }
         }
         
         /// <summary>
+        ///   YAMLの書式に誤りがあります: {0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Exception_Format_InvalidYamlFormat {
+            get {
+                return ResourceManager.GetString("Exception_Format_InvalidYamlFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイトル&apos;{0}&apos;のユースケースシナリオに事前条件が存在しません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Exception_Format_NotFoundPreconditionKey {
+            get {
+                return ResourceManager.GetString("Exception_Format_NotFoundPreconditionKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   シナリオセットファイルの指定に誤りがあります。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Exception_InvalidScenarioSetFileSpecification {
+        public static string Exception_InvalidScenarioSetFileSpecification {
             get {
                 return ResourceManager.GetString("Exception_InvalidScenarioSetFileSpecification", resourceCulture);
             }
@@ -108,7 +126,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   ユースケーステンプレートの記述に誤りがあります。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Exception_RazorEngineTemplateCompilation {
+        public static string Exception_RazorEngineTemplateCompilation {
             get {
                 return ResourceManager.GetString("Exception_RazorEngineTemplateCompilation", resourceCulture);
             }
@@ -117,7 +135,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   シナリオセットファイルが存在しません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Exception_ScenarioSetFileNotFound {
+        public static string Exception_ScenarioSetFileNotFound {
             get {
                 return ResourceManager.GetString("Exception_ScenarioSetFileNotFound", resourceCulture);
             }
@@ -126,7 +144,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   {0}-テストスイート.xlsx に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string FileName_Format_TestSuiteExcel {
+        public static string FileName_Format_TestSuiteExcel {
             get {
                 return ResourceManager.GetString("FileName_Format_TestSuiteExcel", resourceCulture);
             }
@@ -135,7 +153,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Specify apply template file(option) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string HelpDescription_ApplyTemplate {
+        public static string HelpDescription_ApplyTemplate {
             get {
                 return ResourceManager.GetString("HelpDescription_ApplyTemplate", resourceCulture);
             }
@@ -144,7 +162,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Specify source use case catalog file(requires) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string HelpDescription_Input {
+        public static string HelpDescription_Input {
             get {
                 return ResourceManager.GetString("HelpDescription_Input", resourceCulture);
             }
@@ -153,7 +171,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Specify output directory(option) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string HelpDescription_Output {
+        public static string HelpDescription_Output {
             get {
                 return ResourceManager.GetString("HelpDescription_Output", resourceCulture);
             }
@@ -162,7 +180,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   手動 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Action_Manual {
+        public static string Literal_TestSuite_Action_Manual {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Action_Manual", resourceCulture);
             }
@@ -171,7 +189,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   アクション に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCaseAction {
+        public static string Literal_TestSuite_Heading_TestCaseAction {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCaseAction", resourceCulture);
             }
@@ -180,7 +198,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   アクションNo に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCaseActionNo {
+        public static string Literal_TestSuite_Heading_TestCaseActionNo {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCaseActionNo", resourceCulture);
             }
@@ -189,7 +207,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   期待結果 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCaseExpected {
+        public static string Literal_TestSuite_Heading_TestCaseExpected {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCaseExpected", resourceCulture);
             }
@@ -198,7 +216,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   テストケース名 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCaseName {
+        public static string Literal_TestSuite_Heading_TestCaseName {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCaseName", resourceCulture);
             }
@@ -207,7 +225,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   備考・説明 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCaseNote {
+        public static string Literal_TestSuite_Heading_TestCaseNote {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCaseNote", resourceCulture);
             }
@@ -216,7 +234,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Preconditions に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCasePreconditions {
+        public static string Literal_TestSuite_Heading_TestCasePreconditions {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCasePreconditions", resourceCulture);
             }
@@ -225,7 +243,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   結果 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCaseResult {
+        public static string Literal_TestSuite_Heading_TestCaseResult {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCaseResult", resourceCulture);
             }
@@ -234,7 +252,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   サマリー に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCaseSummary {
+        public static string Literal_TestSuite_Heading_TestCaseSummary {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCaseSummary", resourceCulture);
             }
@@ -243,7 +261,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   実行種別 に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Literal_TestSuite_Heading_TestCaseType {
+        public static string Literal_TestSuite_Heading_TestCaseType {
             get {
                 return ResourceManager.GetString("Literal_TestSuite_Heading_TestCaseType", resourceCulture);
             }
@@ -252,7 +270,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Error: Invalid parameter: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_InvalidParameter {
+        public static string Message_Format_InvalidParameter {
             get {
                 return ResourceManager.GetString("Message_Format_InvalidParameter", resourceCulture);
             }
@@ -261,7 +279,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Error: Output directory is not found: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_NotExistOutputDirectory {
+        public static string Message_Format_NotExistOutputDirectory {
             get {
                 return ResourceManager.GetString("Message_Format_NotExistOutputDirectory", resourceCulture);
             }
@@ -270,7 +288,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Error: Test suite template excel file is not found: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_NotFoundExcelTemplate {
+        public static string Message_Format_NotFoundExcelTemplate {
             get {
                 return ResourceManager.GetString("Message_Format_NotFoundExcelTemplate", resourceCulture);
             }
@@ -279,7 +297,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Error: Use case catalog is not found: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_NotFoundUseCaseCatalog {
+        public static string Message_Format_NotFoundUseCaseCatalog {
             get {
                 return ResourceManager.GetString("Message_Format_NotFoundUseCaseCatalog", resourceCulture);
             }
@@ -288,7 +306,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Error: Use case template file is not found: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_NotFoundUseCaseTemplate {
+        public static string Message_Format_NotFoundUseCaseTemplate {
             get {
                 return ResourceManager.GetString("Message_Format_NotFoundUseCaseTemplate", resourceCulture);
             }
@@ -297,7 +315,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Write test suite csv catalog file to: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_WriteFileTo_TestSuiteCsv_Catalog {
+        public static string Message_Format_WriteFileTo_TestSuiteCsv_Catalog {
             get {
                 return ResourceManager.GetString("Message_Format_WriteFileTo_TestSuiteCsv_Catalog", resourceCulture);
             }
@@ -306,7 +324,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Write test suite csv scenario set file to: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_WriteFileTo_TestSuiteCsv_ScenarioSet {
+        public static string Message_Format_WriteFileTo_TestSuiteCsv_ScenarioSet {
             get {
                 return ResourceManager.GetString("Message_Format_WriteFileTo_TestSuiteCsv_ScenarioSet", resourceCulture);
             }
@@ -315,7 +333,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Write test suite Excel file to: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_WriteFileTo_TestSuiteExcel {
+        public static string Message_Format_WriteFileTo_TestSuiteExcel {
             get {
                 return ResourceManager.GetString("Message_Format_WriteFileTo_TestSuiteExcel", resourceCulture);
             }
@@ -324,7 +342,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Write use case catalog file to: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_WriteFileTo_UseCaseCatalog {
+        public static string Message_Format_WriteFileTo_UseCaseCatalog {
             get {
                 return ResourceManager.GetString("Message_Format_WriteFileTo_UseCaseCatalog", resourceCulture);
             }
@@ -333,7 +351,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Write use case scenario set file to: {0} に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_Format_WriteFileTo_UseCaseScenarioSet {
+        public static string Message_Format_WriteFileTo_UseCaseScenarioSet {
             get {
                 return ResourceManager.GetString("Message_Format_WriteFileTo_UseCaseScenarioSet", resourceCulture);
             }
@@ -342,7 +360,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Error: Parameter &quot;(--input | -i):[source use case catalog file]&quot; is required. に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_InputParameterIsRequired {
+        public static string Message_InputParameterIsRequired {
             get {
                 return ResourceManager.GetString("Message_InputParameterIsRequired", resourceCulture);
             }
@@ -351,7 +369,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Error: Parameter &quot;--apply | -a&quot; requires both use case catalog template file and use case scenario set template file(&quot;(--apply | -a):[use case catalog template file path]|[use case scenario set template file]&quot;). に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_InvalidMarkdownTemlateParameter {
+        public static string Message_InvalidMarkdownTemlateParameter {
             get {
                 return ResourceManager.GetString("Message_InvalidMarkdownTemlateParameter", resourceCulture);
             }
@@ -360,7 +378,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   Error: Parameter &quot;--output | -o&quot; requires output directory path(&quot;(--output | -o):[output directory path]&quot;) に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string Message_OutputParameterRequiresPath {
+        public static string Message_OutputParameterRequiresPath {
             get {
                 return ResourceManager.GetString("Message_OutputParameterRequiresPath", resourceCulture);
             }
@@ -369,7 +387,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         /// <summary>
         ///   型 System.Byte[] のローカライズされたリソースを検索します。
         /// </summary>
-        internal static byte[] テストスイートテンプレート {
+        public static byte[] テストスイートテンプレート {
             get {
                 object obj = ResourceManager.GetObject("テストスイートテンプレート", resourceCulture);
                 return ((byte[])(obj));
@@ -400,7 +418,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         ///		}
         ///		els [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ユースケースカタログテンプレート {
+        public static string ユースケースカタログテンプレート {
             get {
                 return ResourceManager.GetString("ユースケースカタログテンプレート", resourceCulture);
             }
@@ -443,7 +461,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         ///@:
         ///@:@scenario.Su [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
-        internal static string ユースケースシナリオセットテンプレート {
+        public static string ユースケースシナリオセットテンプレート {
             get {
                 return ResourceManager.GetString("ユースケースシナリオセットテンプレート", resourceCulture);
             }

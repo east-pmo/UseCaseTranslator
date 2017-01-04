@@ -24,6 +24,24 @@ namespace East.Tool.UseCaseTranslator.Controllers
     public sealed class MarkdownConverter : UseCaseTranslatorOperator
     {
         //
+        // クラスメソッド
+        //
+
+        /// <summary>
+        /// 変換結果を指定ディレクトリに作成する
+        /// </summary>
+        /// <param name="catalog">対象ユースケースカタログ</param>
+        /// <param name="outputDirectoryPath">出力ディレクトリ</param>
+        public static void CreateConvertedMarkdownTo(UseCaseCatalog catalog, string outputDirectoryPath)
+        {
+            var parameters = new Dictionary<string, object> {
+                { PARAMETER_OUTPUT, outputDirectoryPath }
+            };
+            var converter = new MarkdownConverter(parameters);
+            converter.CreateTranslation(catalog);
+        }
+
+        //
         // フィールド・プロパティ
         //
 
@@ -123,6 +141,33 @@ namespace East.Tool.UseCaseTranslator.Controllers
             }
         }
 
+        /// <summary>
+        /// 変換結果を作成する
+        /// </summary>
+        /// <param name="catalog">ユースケースカタログ</param>
+        private void CreateTranslation(UseCaseCatalog catalog)
+        {
+            var useCaseCatalogTemplate = Resources.Resources.ユースケースカタログテンプレート;
+            if (string.IsNullOrWhiteSpace(UseCaseCatalogTemplateFilePath) == false) {
+                using (var reader = new StreamReader(UseCaseCatalogTemplateFilePath)) {
+                    useCaseCatalogTemplate = reader.ReadToEnd();
+                }
+            }
+            var useCaseScenarioSetTemplate = Resources.Resources.ユースケースシナリオセットテンプレート;
+            if (string.IsNullOrWhiteSpace(UseCaseScenarioSetTemplateFilePath) == false) {
+                using (var reader = new StreamReader(UseCaseScenarioSetTemplateFilePath)) {
+                    useCaseScenarioSetTemplate = reader.ReadToEnd();
+                }
+            }
+            InitializeRazorEngineTemplate(useCaseCatalogTemplate, useCaseScenarioSetTemplate);
+
+            var targetDirPath = OutputDirectoryPath;
+            CreateUseCaseCatalog(catalog);
+            foreach (var scenarioSet in catalog.ScenarioSets) {
+                CreateUseCaseScenarioSet(scenarioSet);
+            }
+        }
+
         //
         // 再定義メソッド
         //
@@ -165,25 +210,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
         /// <param name="catalog">ユースケース</param>
         protected override void DoOperate(UseCaseCatalog catalog)
         {
-            var useCaseCatalogTemplate = Resources.Resources.ユースケースカタログテンプレート;
-            if (string.IsNullOrWhiteSpace(UseCaseCatalogTemplateFilePath) == false) {
-                using (var reader = new StreamReader(UseCaseCatalogTemplateFilePath)) {
-                    useCaseCatalogTemplate = reader.ReadToEnd();
-                }
-            }
-            var useCaseScenarioSetTemplate = Resources.Resources.ユースケースシナリオセットテンプレート;
-            if (string.IsNullOrWhiteSpace(UseCaseScenarioSetTemplateFilePath) == false) {
-                using (var reader = new StreamReader(UseCaseScenarioSetTemplateFilePath)) {
-                    useCaseScenarioSetTemplate = reader.ReadToEnd();
-                }
-            }
-            InitializeRazorEngineTemplate(useCaseCatalogTemplate, useCaseScenarioSetTemplate);
-
-            var targetDirPath = OutputDirectoryPath;
-            CreateUseCaseCatalog(catalog);
-            foreach (var scenarioSet in catalog.ScenarioSets) {
-                CreateUseCaseScenarioSet(scenarioSet);
-            }
+            CreateTranslation(catalog);
         }
     }
 }

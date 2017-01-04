@@ -224,6 +224,75 @@ namespace East.Tool.UseCaseTranslator.Controllers
     public sealed class ExcelTestSuiteBuilder : TestSuiteBuilder
     {
         //
+        // クラスメソッド
+        //
+
+        /// <summary>
+        /// Excelテストスイートを指定ディレクトリに作成する
+        /// </summary>
+        /// <param name="catalog">対象ユースケースカタログ</param>
+        /// <param name="outputDirectoryPath">出力ディレクトリ</param>
+        /// <param name="templateFilePath">テンプレートのパス</param>
+        /// <returns>出力ファイルの完全パス</returns>
+        public static string CreateExcelTestSuiteTo(UseCaseCatalog catalog, string outputDirectoryPath, string templateFilePath)
+        {
+            Contract.Requires(catalog != null);
+            Contract.Requires(string.IsNullOrWhiteSpace(outputDirectoryPath) == false && Directory.Exists(outputDirectoryPath));
+            Contract.Ensures(string.IsNullOrWhiteSpace(Contract.Result<string>()) == false && File.Exists(Contract.Result<string>()));
+
+            string outputFilePath = string.Empty;
+            using (Stream stream = (string.IsNullOrWhiteSpace(templateFilePath) == false
+                                    ? new FileStream(templateFilePath, FileMode.Open, FileAccess.Read) as Stream
+                                    : new MemoryStream(Resources.Resources.テストスイートテンプレート) as Stream)) {
+                using (var template = new XLWorkbook(stream, XLEventTracking.Disabled)) {
+                    var summarySheet = template.Worksheet(1);
+                    summarySheet.Cell(1, 1).SetValue(string.Format("{0} テストスイート", catalog.Title));
+                    summarySheet.Cell(2, 1).SetValue(string.Format("最終更新日時: {0:yyyy-MM-dd}", catalog.LastUpdateTime));
+
+                    var testCaseTemplateSheet = template.Worksheet(2);
+                    foreach (var scenarioSet in catalog.ScenarioSets) {
+                        testCaseTemplateSheet.CopyTo(scenarioSet.Title);
+
+                        var testCaseSetSheet = template.Worksheet(template.Worksheets.Count());
+                        testCaseSetSheet.Cell(1, 2).SetValue(scenarioSet.Title);
+                        testCaseSetSheet.Cell(2, 2).SetValue(scenarioSet.Summary);
+
+                        var templateRow = testCaseSetSheet.Row(6);
+                        IXLRow testCaseRow = null;
+                        foreach (var scenario in scenarioSet.Scenarios) {
+                            var firstActionValues = MakeTestCaseFirstActionValues(scenario).ToList();
+
+                            var actionNo = 1;
+                            testCaseRow = (testCaseRow != null ? testCaseRow.InsertRowsBelow(1).First() : templateRow);
+                            for (var cellIndex = 1; cellIndex <= firstActionValues.Count(); ++cellIndex) {
+                                testCaseRow.Cell(cellIndex).SetValue(firstActionValues[cellIndex - 1]);
+                            }
+
+                            foreach (var action in scenario.Actions.Skip(1)) {
+                                ++actionNo;
+                                var actionValues = MakeTestCaseFollowingActionValues(actionNo, action).ToList();
+
+                                testCaseRow = testCaseRow.InsertRowsBelow(1).First();
+                                for (var cellIndex = 1; cellIndex <= actionValues.Count(); ++cellIndex) {
+                                    testCaseRow.Cell(cellIndex).SetValue(actionValues[cellIndex - 1]);
+                                }
+                            }
+
+                            // 最後に空行を入れる
+                            testCaseRow = testCaseRow.InsertRowsBelow(1).First();
+                        }
+                        testCaseRow.Delete();
+                    }
+                    template.Worksheet(2).Delete();
+
+                    outputFilePath = Path.Combine(outputDirectoryPath, string.Format(Resources.Resources.FileName_Format_TestSuiteExcel, catalog.Title));
+                    template.SaveAs(outputFilePath);
+                }
+            }
+            return outputFilePath;
+        }
+
+        //
         // フィールド
         //
 
@@ -277,55 +346,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
         /// <param name="catalog">ユースケース</param>
         override protected void DoOperate(UseCaseCatalog catalog)
         {
-            using (Stream stream = (string.IsNullOrWhiteSpace(templateFilePath) == false
-                                    ? new FileStream(templateFilePath, FileMode.Open, FileAccess.Read) as Stream
-                                    : new MemoryStream(Resources.Resources.テストスイートテンプレート) as Stream)) {
-                using (var template = new XLWorkbook(stream, XLEventTracking.Disabled)) {
-                    var summarySheet = template.Worksheet(1);
-                    summarySheet.Cell(1, 1).SetValue(string.Format("{0} テストスイート", catalog.Title));
-                    summarySheet.Cell(2, 1).SetValue(string.Format("最終更新日時: {0:yyyy-MM-dd}", catalog.LastUpdateTime));
-
-                    var testCaseTemplateSheet = template.Worksheet(2);
-                    foreach (var scenarioSet in catalog.ScenarioSets) {
-                        testCaseTemplateSheet.CopyTo(scenarioSet.Title);
-
-                        var testCaseSetSheet = template.Worksheet(template.Worksheets.Count());
-                        testCaseSetSheet.Cell(1, 2).SetValue(scenarioSet.Title);
-                        testCaseSetSheet.Cell(2, 2).SetValue(scenarioSet.Summary);
-
-                        var templateRow = testCaseSetSheet.Row(6);
-                        IXLRow testCaseRow = null;
-                        foreach (var scenario in scenarioSet.Scenarios) {
-                            var firstActionValues = MakeTestCaseFirstActionValues(scenario).ToList();
-
-                            var actionNo = 1;
-                            testCaseRow = (testCaseRow != null ? testCaseRow.InsertRowsBelow(1).First() : templateRow);
-                            for (var cellIndex = 1; cellIndex <= firstActionValues.Count(); ++cellIndex) {
-                                testCaseRow.Cell(cellIndex).SetValue(firstActionValues[cellIndex - 1]);
-                            }
-
-                            foreach (var action in scenario.Actions.Skip(1)) {
-                                ++actionNo;
-                                var actionValues = MakeTestCaseFollowingActionValues(actionNo, action).ToList();
-
-                                testCaseRow = testCaseRow.InsertRowsBelow(1).First();
-                                for (var cellIndex = 1; cellIndex <= actionValues.Count(); ++cellIndex) {
-                                    testCaseRow.Cell(cellIndex).SetValue(actionValues[cellIndex - 1]);
-                                }
-                            }
-
-                            // 最後に空行を入れる
-                            testCaseRow = testCaseRow.InsertRowsBelow(1).First();
-                        }
-                        testCaseRow.Delete();
-                    }
-                    template.Worksheet(2).Delete();
-
-                    var outputFilePath = Path.Combine(OutputDirectoryPath, string.Format(Resources.Resources.FileName_Format_TestSuiteExcel, catalog.Title));
-                    Console.Error.WriteLine(Resources.Resources.Message_Format_WriteFileTo_TestSuiteExcel, outputFilePath);
-                    template.SaveAs(outputFilePath);
-                }
-            }
+            Console.Error.WriteLine(Resources.Resources.Message_Format_WriteFileTo_TestSuiteExcel, CreateExcelTestSuiteTo(catalog, OutputDirectoryPath, templateFilePath));
         }
     }
 }
