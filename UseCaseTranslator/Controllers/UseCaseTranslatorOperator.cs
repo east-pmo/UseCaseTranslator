@@ -7,7 +7,6 @@ using System.Diagnostics.Contracts;
 
 namespace East.Tool.UseCaseTranslator.Controllers
 {
-
     /// <summary>
     /// UseCaseTranslator操作抽象基本クラス
     /// </summary>
@@ -20,17 +19,17 @@ namespace East.Tool.UseCaseTranslator.Controllers
         /// <summary>
         /// パラメーター: 入力ファイル
         /// </summary>
-        private const string PARAMETER_INPUT = "input";
+        protected const string PARAMETER_INPUT = "input";
 
         /// <summary>
         /// パラメーター: 出力ディレクトリ
         /// </summary>
-        private const string PARAMETER_OUTPUT = "output";
+        protected const string PARAMETER_OUTPUT = "output";
 
         /// <summary>
         /// パラメーター: 適用テンプレート
         /// </summary>
-        private const string PARAMETER_APPLY = "apply";
+        protected const string PARAMETER_APPLY = "apply";
 
         //
         // クラスフィールド・プロパティ

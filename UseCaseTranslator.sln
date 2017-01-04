@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCaseTranslator", "UseCaseTranslator\UseCaseTranslator.csproj", "{F79CDC6A-03DC-4765-9178-E8528BE0DD51}"
 EndProject
@@ -13,6 +13,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{DBF7BC
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCaseTranslator.Tests", "UseCaseTranslator.Tests\UseCaseTranslator.Tests.csproj", "{DB88DD6F-E005-4321-8C2A-385CB4F7F5A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCaseTranslator.WebAPI", "UseCaseTranslator.WebAPI\UseCaseTranslator.WebAPI.csproj", "{26956007-3850-4F0C-9843-0447B3EA5FDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UseCaseTranslator.WebAPI.Tests", "UseCaseTranslator.WebAPI.Tests\UseCaseTranslator.WebAPI.Tests.csproj", "{45AEA196-3971-436D-B69E-D8AB81093C3D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -28,6 +32,14 @@ Global
 		{DB88DD6F-E005-4321-8C2A-385CB4F7F5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB88DD6F-E005-4321-8C2A-385CB4F7F5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB88DD6F-E005-4321-8C2A-385CB4F7F5A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26956007-3850-4F0C-9843-0447B3EA5FDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26956007-3850-4F0C-9843-0447B3EA5FDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26956007-3850-4F0C-9843-0447B3EA5FDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26956007-3850-4F0C-9843-0447B3EA5FDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45AEA196-3971-436D-B69E-D8AB81093C3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45AEA196-3971-436D-B69E-D8AB81093C3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45AEA196-3971-436D-B69E-D8AB81093C3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45AEA196-3971-436D-B69E-D8AB81093C3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

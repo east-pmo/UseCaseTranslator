@@ -183,6 +183,9 @@ namespace East.Tool.UseCaseTranslator.Models
                         break;
                 }
             }
+            if (preconditions == null) {
+                throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_NotFoundPreconditionKey, title));
+            }
 
             return new UseCaseScenario {
                 Title = title,
