@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using YamlDotNet.Core;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 using East.Tool.UseCaseTranslator.Models;
+
 using System.Diagnostics.Contracts;
 
 namespace East.Tool.UseCaseTranslator.Controllers
@@ -15,8 +17,35 @@ namespace East.Tool.UseCaseTranslator.Controllers
     public sealed class UseCaseReader
     {
         //
+        // フィールド
+        //
+
+        /// <summary>
+        /// 参照ディレクトリ
+        /// </summary>
+        private readonly string referenceDirectory;
+
+        //
         // メソッド
         //
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        public UseCaseReader()
+        {
+        }
+
+        /// <summary>
+        /// コンストラクタ
+        /// </summary>
+        /// <param name="refDirectory">参照ディレクトリのパス</param>
+        public UseCaseReader(string refDirectory)
+        {
+            Contract.Requires(string.IsNullOrWhiteSpace(refDirectory) == false && Directory.Exists(refDirectory));
+
+            referenceDirectory = Path.GetFullPath(refDirectory);
+        }
 
         /// <summary>
         /// ユースケースカタログを読みこむ
@@ -35,6 +64,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
             var lastUpdateTime = catalogLastUpdateTime;
 			var deserializer = new Deserializer(null, new CamelCaseNamingConvention(), false);
 			var asYaml = deserializer.Deserialize(reader) as Dictionary<object, object>;
+
             Contract.Assert(asYaml != null);
             if (asYaml.ContainsKey("ユースケースシナリオカタログ")) {
                 // シナリオセットを読みこむ
@@ -44,9 +74,15 @@ namespace East.Tool.UseCaseTranslator.Controllers
                     if (path == null) {
                         throw new ArgumentOutOfRangeException(Resources.Resources.Exception_InvalidScenarioSetFileSpecification);
                     }
-                    else if (File.Exists(path) == false) {
-                        throw new FileNotFoundException(Resources.Resources.Exception_ScenarioSetFileNotFound, path);
+                    var exists = File.Exists(path);
+                    if (exists == false && string.IsNullOrWhiteSpace(referenceDirectory) == false) {
+                        path = Path.Combine(referenceDirectory, path);
+                        exists = File.Exists(path);
                     }
+                    if (exists == false) {
+                        throw new FileNotFoundException(Resources.Resources.Exception_ScenarioSetFileNotFound, scenarioFilePath as string);
+                    }
+
                     var scenarioSetLastUpdateTime = File.GetLastWriteTime(path);
                     if (lastUpdateTime < scenarioSetLastUpdateTime) {
                         lastUpdateTime = scenarioSetLastUpdateTime;
@@ -59,8 +95,8 @@ namespace East.Tool.UseCaseTranslator.Controllers
             		        scenarioSet.Add(new KeyValuePair<string, Dictionary<object, object>>(Path.GetFileName(path), scenarioSetAsYaml as Dictionary<object, object>));
                         }
                     }
-                    catch (Exception e) {
-                        throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_InvalidScenarioSetFileFormat, path), e);
+                    catch (YamlException e) {
+                        throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_InvalidScenarioSetFileFormat, path, e.Message), e);
                     }
                 }
                 asYaml.Remove("シナリオセット");
@@ -80,6 +116,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
                 // 自身がシナリオセット
                 catalog = new UseCaseCatalog(new List<KeyValuePair<string, Dictionary<object, object>>> { new KeyValuePair<string, Dictionary<object, object>>(catalogFileName, asYaml) });
             }
+
             return catalog;
         }
     }

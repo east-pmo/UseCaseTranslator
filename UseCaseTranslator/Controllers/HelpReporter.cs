@@ -18,6 +18,15 @@ namespace East.Tool.UseCaseTranslator.Controllers
         //
 
         /// <summary>
+        /// バージョンの文字列表記を返す
+        /// </summary>
+        /// <returns>バージョンの文字列表記</returns>
+        public static string GetAssemblyVersionString()
+        {
+            return GetAssemblyVersionString(System.Reflection.Assembly.GetExecutingAssembly().GetName());
+        }
+
+        /// <summary>
         /// ヘルプを出力する
         /// </summary>
         public static void ReportHelp()
@@ -25,7 +34,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
             var assembly = System.Reflection.Assembly.GetExecutingAssembly();
             var assemblyName = assembly.GetName();
             var usage = new List<string> {
-                string.Format("{0} {1}({2})", assemblyName.Name, assemblyName.Version, File.GetLastWriteTimeUtc(assembly.Location).ToString("yyyyMMddTHHmmss")),
+                string.Format("{0} {1}({2})", assemblyName.Name, GetAssemblyVersionString(assemblyName), File.GetLastWriteTimeUtc(assembly.Location).ToString("yyyyMMddTHHmmss")),
                 string.Format("Usage: {0} [Command] [Options]", assemblyName.Name),
                 "Command:",
             };
@@ -35,6 +44,16 @@ namespace East.Tool.UseCaseTranslator.Controllers
             foreach (var line in usage) {
                 Console.Error.WriteLine(line);
             }
+        }
+
+        /// <summary>
+        /// バージョンの文字列表記を返す
+        /// </summary>
+        /// <param name="assemblyName">AssemblyNameインスタンス</param>
+        /// <returns>バージョンの文字列表記</returns>
+        private static string GetAssemblyVersionString(System.Reflection.AssemblyName assemblyName)
+        {
+            return assemblyName.Version.ToString();
         }
 
         //

@@ -26,7 +26,12 @@ namespace East.Tool.UseCaseTranslator.Models
             var title = updateInfo.Key as string;
 
             var values = updateInfo.Value as Dictionary<object, object>;
-            var date = values["更新日"] as string;
+
+            const string FIELD_DATE = "更新日";
+            if (values.ContainsKey(FIELD_DATE) == false) {
+                throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_LackUpdateHistoryRequirementField, FIELD_DATE));
+            }
+            var date = values[FIELD_DATE] as string;
 
             var summaries = new List<string>();
             if (values["概要"] is string) {
@@ -182,6 +187,9 @@ namespace East.Tool.UseCaseTranslator.Models
                         metadata.Add(key, pair.Value);
                         break;
                 }
+            }
+            if (preconditions == null) {
+                throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_NotFoundPreconditionKey, title));
             }
 
             return new UseCaseScenario {

@@ -127,7 +127,16 @@
     <value>Translate to Markdown formatted document.</value>
   </data>
   <data name="Exception_Format_InvalidScenarioSetFileFormat" xml:space="preserve">
-    <value>シナリオセットファイル{0}の書式に誤りがあります。</value>
+    <value>シナリオセットファイル"{0}"の書式に誤りがあります: {1}</value>
+  </data>
+  <data name="Exception_Format_InvalidYamlFormat" xml:space="preserve">
+    <value>YAMLの書式に誤りがあります: {0}</value>
+  </data>
+  <data name="Exception_Format_LackUpdateHistoryRequirementField" xml:space="preserve">
+    <value>更新履歴の必須指定項目"{0}"が存在しません</value>
+  </data>
+  <data name="Exception_Format_NotFoundPreconditionKey" xml:space="preserve">
+    <value>タイトル'{0}'のユースケースシナリオに事前条件が存在しません。</value>
   </data>
   <data name="Exception_InvalidScenarioSetFileSpecification" xml:space="preserve">
     <value>シナリオセットファイルの指定に誤りがあります。</value>

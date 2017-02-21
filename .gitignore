@@ -12,3 +12,10 @@
 /UseCaseTranslator.Tests/obj
 
 /Document
+/UseCaseTranslator.WebAPI/bin
+/UseCaseTranslator.WebAPI/obj/Debug
+/UseCaseTranslator.WebAPI.Tests/bin/Debug
+/UseCaseTranslator.WebAPI.Tests/obj/Debug
+/Publish/Web Deploy/UseCaseTranslator.WebAPI.zip
+/UseCaseTranslator.WebAPI/obj/Release
+/UseCaseTranslator.WebAPI.Tests/obj/Release
