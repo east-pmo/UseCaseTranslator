@@ -134,6 +134,7 @@ namespace East.Tool.UseCaseTranslator.WebAPI.Controllers.V1_0
         /// </summary>
         /// <param name="testSuiteExcelFilePath">テストスイートExcelファイルパス</param>
         /// <returns>応答コンテントインスタンス</returns>
+        [Pure]
         private static ByteArrayContent CreateTestSuiteResponseContent(string testSuiteExcelFilePath)
         {
             Contract.Requires(string.IsNullOrWhiteSpace(testSuiteExcelFilePath) == false && File.Exists(testSuiteExcelFilePath));

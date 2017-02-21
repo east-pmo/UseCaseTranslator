@@ -88,7 +88,7 @@ namespace East.Tool.UseCaseTranslator.Resources {
         }
         
         /// <summary>
-        ///   シナリオセットファイル{0}の書式に誤りがあります。 に類似しているローカライズされた文字列を検索します。
+        ///   シナリオセットファイル&quot;{0}&quot;の書式に誤りがあります: {1} に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Exception_Format_InvalidScenarioSetFileFormat {
             get {
@@ -102,6 +102,15 @@ namespace East.Tool.UseCaseTranslator.Resources {
         public static string Exception_Format_InvalidYamlFormat {
             get {
                 return ResourceManager.GetString("Exception_Format_InvalidYamlFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   更新履歴の必須指定項目&quot;{0}&quot;が存在しません に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Exception_Format_LackUpdateHistoryRequirementField {
+            get {
+                return ResourceManager.GetString("Exception_Format_LackUpdateHistoryRequirementField", resourceCulture);
             }
         }
         

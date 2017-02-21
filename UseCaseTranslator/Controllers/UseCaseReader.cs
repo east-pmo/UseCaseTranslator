@@ -96,7 +96,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
                         }
                     }
                     catch (YamlException e) {
-                        throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_InvalidScenarioSetFileFormat, path), e);
+                        throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_InvalidScenarioSetFileFormat, path, e.Message), e);
                     }
                 }
                 asYaml.Remove("シナリオセット");
