@@ -135,6 +135,12 @@
   <data name="Exception_Format_LackUpdateHistoryRequirementField" xml:space="preserve">
     <value>更新履歴の必須指定項目"{0}"が存在しません</value>
   </data>
+  <data name="Exception_Format_NoExpectedResult" xml:space="preserve">
+    <value>タイトル'{0}'の{1}番目のアクションに結果が存在しません。</value>
+  </data>
+  <data name="Exception_Format_NoOperation" xml:space="preserve">
+    <value>タイトル'{0}'の{1}番目のアクションに操作が存在しません。</value>
+  </data>
   <data name="Exception_Format_NotFoundPreconditionKey" xml:space="preserve">
     <value>タイトル'{0}'のユースケースシナリオに事前条件が存在しません。</value>
   </data>

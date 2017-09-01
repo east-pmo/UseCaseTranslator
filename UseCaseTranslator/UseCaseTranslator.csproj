@@ -102,7 +102,7 @@
     <ManifestKeyFile>UseCaseTranslator_一時キー.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
-    <GenerateManifests>true</GenerateManifests>
+    <GenerateManifests>false</GenerateManifests>
   </PropertyGroup>
   <PropertyGroup>
     <SignManifests>false</SignManifests>
@@ -110,6 +110,7 @@
   <PropertyGroup>
     <TargetZone>LocalIntranet</TargetZone>
   </PropertyGroup>
+  <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
   <PropertyGroup />
@@ -166,6 +167,7 @@
     <None Include="packages.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\app.manifest" />
     <None Include="Resources\テストスイートテンプレート.xlsx" />
     <None Include="Resources\ユースケースカタログテンプレート.md" />
     <None Include="Resources\ユースケースシナリオセットテンプレート.md" />
