@@ -115,6 +115,24 @@ namespace East.Tool.UseCaseTranslator.Resources {
         }
         
         /// <summary>
+        ///   タイトル&apos;{0}&apos;の{1}番目のアクションに結果が存在しません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Exception_Format_NoExpectedResult {
+            get {
+                return ResourceManager.GetString("Exception_Format_NoExpectedResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   タイトル&apos;{0}&apos;の{1}番目のアクションに操作が存在しません。 に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Exception_Format_NoOperation {
+            get {
+                return ResourceManager.GetString("Exception_Format_NoOperation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   タイトル&apos;{0}&apos;のユースケースシナリオに事前条件が存在しません。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Exception_Format_NotFoundPreconditionKey {

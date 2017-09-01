@@ -173,13 +173,21 @@ namespace East.Tool.UseCaseTranslator.Models
                         break;
 
                     case "アクション":
+                        var index = 1;
                         foreach (var actionsAsYaml in pair.Value as IEnumerable<object>) {
                             var actionsAsDictionary = actionsAsYaml as IDictionary<object, object>;
+                            if (actionsAsDictionary.ContainsKey("操作") == false) {
+                                throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_NoOperation, title, index));
+                            }
+                            if (actionsAsDictionary.ContainsKey("結果") == false) {
+                                throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_NoExpectedResult, title, index));
+                            }
                             var resultsAsDictionary = actionsAsDictionary["結果"];
                             var actionResults = resultsAsDictionary is string
                                                 ? new List<string> { resultsAsDictionary as string }
                                                 : (resultsAsDictionary as IEnumerable<object>).Select(result => result as string);
                             actions.Add(UseCaseScenarioAction.CreateInstance(actionsAsDictionary["操作"] as string, actionResults));
+                            ++index;
                         }
                         break;
 
