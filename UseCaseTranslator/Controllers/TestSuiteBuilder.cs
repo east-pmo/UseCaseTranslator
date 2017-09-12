@@ -250,6 +250,10 @@ namespace East.Tool.UseCaseTranslator.Controllers
                     summarySheet.Cell(2, 1).SetValue(string.Format("最終更新日時: {0:yyyy-MM-dd}", catalog.LastUpdateTime));
 
                     var testCaseTemplateSheet = template.Worksheet(2);
+                    var tooLongTitles = catalog.ScenarioSets.Select(scenarioSet => scenarioSet.Title).Where(title => 31 <= title.Length);
+                    if (tooLongTitles.Any()) {
+                        throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_TooLongScenarioSetTitle, string.Join("\n\t", tooLongTitles)));
+                    }
                     foreach (var scenarioSet in catalog.ScenarioSets) {
                         testCaseTemplateSheet.CopyTo(scenarioSet.Title);
 

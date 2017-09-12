@@ -150,6 +150,39 @@ namespace East.Tool
         }
 
         /// <summary>
+        /// 引数文字列を解析する
+        /// </summary>
+        /// <param name="argument">引数文字列</param>
+        /// <returns>解析結果(引数名と値のペア)</returns>
+        private Tuple<string, string> ParseArgumentString(string argument)
+        {
+            Contract.Requires(string.IsNullOrWhiteSpace(argument) == false);
+
+            Tuple<string, string> result = null;
+            foreach (var parameter in parameterDefinitions) {
+                if (argument.StartsWith("--" + parameter.Name, true, CultureInfo.CurrentCulture)
+                || argument.StartsWith("-" + parameter.ShortName, true, CultureInfo.CurrentCulture)) {
+                    if (parameter.ValueSpecified) {
+                        var splitPos = argument.IndexOf(":");
+                        if (0 <= splitPos) {
+                            var value = argument.Substring(splitPos + 1);
+                            if (0 < value.Length) {
+                                result = new Tuple<string, string>(parameter.Name, value);
+                            }
+                        }
+                    }
+                    else {
+                        result = new Tuple<string, string>(parameter.Name, null);
+                    }
+                }
+                if (result != null) {
+                    break;
+                }
+            }
+            return result;
+        }
+
+        /// <summary>
         /// パラメーターを返す
         /// </summary>
         /// <param name="arguments">引数</param>
@@ -162,29 +195,11 @@ namespace East.Tool
             var parameters = new Dictionary<string, object>();
             var invalidArguments = new List<string>();
             foreach (var argument in arguments) {
-                var accept = false;
-                foreach (var parameter in parameterDefinitions) {
-                    if (argument.StartsWith("--" + parameter.Name, true, CultureInfo.CurrentCulture)
-                    || argument.StartsWith("-" + parameter.ShortName, true, CultureInfo.CurrentCulture)) {
-                        if (parameter.ValueSpecified) {
-                            var splitPos = argument.IndexOf(":");
-                            if (0 <= splitPos) {
-                                var value = argument.Substring(splitPos + 1);
-                                if (0 < value.Length) {
-                                   parameters.Add(parameter.Name, value);
-                                }
-                            }
-                        }
-                        else {
-                            parameters.Add(parameter.Name, null);
-                        }
-                    }
-                    if (parameters.ContainsKey(parameter.Name)) {
-                        accept = true;
-                        break;
-                    }
+                var parsed = ParseArgumentString(argument);
+                if (parsed != null) {
+                    parameters.Add(parsed.Item1, parsed.Item2);
                 }
-                if (accept == false) {
+                else {
                     invalidArguments.Add(argument);
                 }
             }

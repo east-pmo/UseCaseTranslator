@@ -142,6 +142,15 @@ namespace East.Tool.UseCaseTranslator.Resources {
         }
         
         /// <summary>
+        ///   次のシナリオセットのタイトルは31文字以上のためExcelファイルワークシート名に指定できません:\n\t{0} に類似しているローカライズされた文字列を検索します。
+        /// </summary>
+        public static string Exception_Format_TooLongScenarioSetTitle {
+            get {
+                return ResourceManager.GetString("Exception_Format_TooLongScenarioSetTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   シナリオセットファイルの指定に誤りがあります。 に類似しているローカライズされた文字列を検索します。
         /// </summary>
         public static string Exception_InvalidScenarioSetFileSpecification {
