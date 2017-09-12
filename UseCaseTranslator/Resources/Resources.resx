@@ -144,6 +144,9 @@
   <data name="Exception_Format_NotFoundPreconditionKey" xml:space="preserve">
     <value>タイトル'{0}'のユースケースシナリオに事前条件が存在しません。</value>
   </data>
+  <data name="Exception_Format_TooLongScenarioSetTitle" xml:space="preserve">
+    <value>次のシナリオセットのタイトルは31文字以上のためExcelファイルワークシート名に指定できません:\n\t{0}</value>
+  </data>
   <data name="Exception_InvalidScenarioSetFileSpecification" xml:space="preserve">
     <value>シナリオセットファイルの指定に誤りがあります。</value>
   </data>
