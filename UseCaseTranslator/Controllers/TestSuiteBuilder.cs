@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using ClosedXML.Excel;
 
 using East.Tool.UseCaseTranslator.Models;
@@ -62,10 +63,18 @@ namespace East.Tool.UseCaseTranslator.Controllers
             Contract.Requires(scenario != null);
             Contract.Ensures(Contract.Result<IEnumerable<object>>() != null && Contract.Result<IEnumerable<object>>().Count() == 9);
 
+            string summary;
+            if (scenario.Summary is string) {
+                var summaryLines = Regex.Replace(scenario.Summary, "\\s*\\\\n\\s*", "\n").Split('\n').Select(line => line.Trim());
+                summary = 1 < summaryLines.Count() ? string.Join(Environment.NewLine, summaryLines) : scenario.Summary;
+            }
+            else {
+                summary = ConvertCollectionValue(scenario.Summary);
+            }
             var firstAction = scenario.Actions.First();
             return new object[] {
                 scenario.Title,
-                scenario.Summary,
+                summary,
                 ConvertCollectionValue(scenario.Preconditions),
                 1,
                 firstAction.Action,
@@ -246,6 +255,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
                                     : new MemoryStream(Resources.Resources.テストスイートテンプレート) as Stream)) {
                 using (var template = new XLWorkbook(stream, XLEventTracking.Disabled)) {
                     var summarySheet = template.Worksheet(1);
+
                     summarySheet.Cell(1, 1).SetValue(string.Format("{0} テストスイート", catalog.Title));
                     summarySheet.Cell(2, 1).SetValue(string.Format("最終更新日時: {0:yyyy-MM-dd}", catalog.LastUpdateTime));
 
@@ -255,15 +265,22 @@ namespace East.Tool.UseCaseTranslator.Controllers
 
                         var testCaseSetSheet = template.Worksheet(template.Worksheets.Count());
                         testCaseSetSheet.Cell(1, 2).SetValue(scenarioSet.Title);
-                        testCaseSetSheet.Cell(2, 2).SetValue(scenarioSet.Summary);
+
+                        if (scenarioSet.Summary is string) {
+                            var summaryLines = Regex.Replace(scenarioSet.Summary, "\\s*\\\\n\\s*", "\n").Split('\n').Select(line => line.Trim());
+                            testCaseSetSheet.Cell(2, 2).SetValue(1 < summaryLines.Count() ? string.Join(Environment.NewLine, summaryLines) : scenarioSet.Summary);
+                        }
+                        else {
+                            testCaseSetSheet.Cell(2, 2).SetValue(ConvertCollectionValue(scenarioSet.Summary));
+                        }
 
                         var templateRow = testCaseSetSheet.Row(6);
-                        IXLRow testCaseRow = null;
+                        var testCaseRow = templateRow;
                         foreach (var scenario in scenarioSet.Scenarios) {
                             var firstActionValues = MakeTestCaseFirstActionValues(scenario).ToList();
 
                             var actionNo = 1;
-                            testCaseRow = (testCaseRow != null ? testCaseRow.InsertRowsBelow(1).First() : templateRow);
+                            testCaseRow = testCaseRow.InsertRowsBelow(1).First();
                             for (var cellIndex = 1; cellIndex <= firstActionValues.Count(); ++cellIndex) {
                                 testCaseRow.Cell(cellIndex).SetValue(firstActionValues[cellIndex - 1]);
                             }
@@ -282,6 +299,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
                             testCaseRow = testCaseRow.InsertRowsBelow(1).First();
                         }
                         testCaseRow.Delete();
+                        templateRow.Delete();
                     }
                     template.Worksheet(2).Delete();
 
@@ -330,7 +348,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
         protected override bool DoCanOperate()
         {
             if (string.IsNullOrWhiteSpace(TemplateFileParam) == false) {
-                var fullPath = Path.GetFullPath(TemplateFileParam);
+                var fullPath = Path.GetFullPath(Utilities.TryToNormalizeFilePath(TemplateFileParam));
                 if (File.Exists(fullPath) == false) {
                     Console.Error.WriteLine(string.Format(Resources.Resources.Message_Format_NotFoundExcelTemplate, fullPath));
                     return false;

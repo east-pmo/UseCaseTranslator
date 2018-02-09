@@ -21,7 +21,7 @@ namespace East.Tool.UseCaseTranslator.WebAPI.Tests.Controllers.V1_0
         {
             var result = new East.Tool.UseCaseTranslator.WebAPI.Controllers.V1_0.VersionController().Get();
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.version == "0.2.1.0");
+            Assert.IsTrue(result.version == "0.2.3.0");
         }
     }
 }

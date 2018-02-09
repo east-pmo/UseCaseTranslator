@@ -74,9 +74,10 @@ namespace East.Tool.UseCaseTranslator.Controllers
                     if (path == null) {
                         throw new ArgumentOutOfRangeException(Resources.Resources.Exception_InvalidScenarioSetFileSpecification);
                     }
+                    path = Utilities.TryToNormalizeFilePath(path);
                     var exists = File.Exists(path);
                     if (exists == false && string.IsNullOrWhiteSpace(referenceDirectory) == false) {
-                        path = Path.Combine(referenceDirectory, path);
+                        path = Utilities.TryToNormalizeFilePath(Path.Combine(referenceDirectory, path));
                         exists = File.Exists(path);
                     }
                     if (exists == false) {

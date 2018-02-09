@@ -152,6 +152,7 @@
     <Compile Include="Controllers\TestSuiteBuilder.cs" />
     <Compile Include="Controllers\UseCaseReader.cs" />
     <Compile Include="Controllers\UseCaseTranslatorOperationType.cs" />
+    <Compile Include="Controllers\Utilities.cs" />
     <Compile Include="Models\UseCaseCatalog.cs" />
     <Compile Include="Controllers\OperationType.cs" />
     <Compile Include="Program.cs" />
