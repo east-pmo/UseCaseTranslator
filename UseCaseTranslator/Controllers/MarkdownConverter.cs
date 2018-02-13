@@ -193,7 +193,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
                     return false;
                 }
                 foreach (var template in templates) {
-                    var fullPath = Path.GetFullPath(template);
+                    var fullPath = Path.GetFullPath(Utilities.TryToNormalizeFilePath(template));
                     if (File.Exists(fullPath) == false) {
                         Console.Error.WriteLine(string.Format(Resources.Resources.Message_Format_NotFoundUseCaseTemplate, fullPath));
                         return false;

@@ -179,7 +179,7 @@ namespace East.Tool.UseCaseTranslator.Controllers
                 Console.Error.WriteLine(Resources.Resources.Message_InputParameterIsRequired);
                 return false;
             }
-            var useCaseCatalogFilePath = Path.GetFullPath(UseCaseCatalogFilePath);
+            var useCaseCatalogFilePath = Path.GetFullPath(Utilities.TryToNormalizeFilePath(UseCaseCatalogFilePath));
             if (File.Exists(useCaseCatalogFilePath) == false) {
                 Console.Error.WriteLine(string.Format(Resources.Resources.Message_Format_NotFoundUseCaseCatalog, useCaseCatalogFilePath));
                 return false;

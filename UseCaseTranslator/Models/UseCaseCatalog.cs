@@ -159,7 +159,7 @@ namespace East.Tool.UseCaseTranslator.Models
                         break;
 
                     case "サマリー":
-                        summary = pair.Value as string;
+                        summary = System.Text.RegularExpressions.Regex.Replace(pair.Value as string, "\\s*\\\\n\\s*", "\n");
                         break;
 
                     case "ベースシナリオ":
@@ -182,11 +182,15 @@ namespace East.Tool.UseCaseTranslator.Models
                             if (actionsAsDictionary.ContainsKey("結果") == false) {
                                 throw new ApplicationException(string.Format(Resources.Resources.Exception_Format_NoExpectedResult, title, index));
                             }
+                            var actionAsDictionary = actionsAsDictionary["操作"];
+                            var action = actionAsDictionary is string
+                                        ? actionAsDictionary as string
+                                        : string.Join(" / ", (actionAsDictionary as IEnumerable<object>).Select(result => result as string));
                             var resultsAsDictionary = actionsAsDictionary["結果"];
                             var actionResults = resultsAsDictionary is string
                                                 ? new List<string> { resultsAsDictionary as string }
                                                 : (resultsAsDictionary as IEnumerable<object>).Select(result => result as string);
-                            actions.Add(UseCaseScenarioAction.CreateInstance(actionsAsDictionary["操作"] as string, actionResults));
+                            actions.Add(UseCaseScenarioAction.CreateInstance(action, actionResults));
                             ++index;
                         }
                         break;
