@@ -3,14 +3,56 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using YamlDotNet.Core;
+using YamlDotNet.Core.Events;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
+using YamlDotNet.Serialization.NodeTypeResolvers;
+
 using East.Tool.UseCaseTranslator.Models;
+using East.Tool.UseCaseTranslator.Utilities;
 
 using System.Diagnostics.Contracts;
 
 namespace East.Tool.UseCaseTranslator.Controllers
 {
+    /// <summary>
+    /// カスタムノードタイプリゾルバー
+    /// </summary>
+    /// <remarks>
+    /// キーの重複を禁止するためDictionaryの代わりにValueOverwriteDisallowDictionaryを返す
+    /// </remarks>
+    public sealed class CustomNodeTypeResolver : INodeTypeResolver
+    {
+        //
+        // クラスフィールド
+        //
+
+        /// <summary>
+        /// デフォルトのリゾルバー
+        /// </summary>
+        private static readonly INodeTypeResolver defaultResolver = new DefaultContainersNodeTypeResolver();
+
+        //
+        // 再定義メソッド
+        //
+
+        /// <summary>
+        /// 解決する
+        /// </summary>
+        /// <param name="nodeEvent">ノードイベント</param>
+        /// <param name="currentType">種別</param>
+        /// <returns>解決したときtrue</returns>
+        public bool Resolve(NodeEvent nodeEvent, ref Type currentType)
+        {
+            if (currentType == typeof(object) && nodeEvent is MappingStart) {
+                currentType = typeof(ValueOverwriteDisallowDictionary<object, object>);
+                return true;
+            }
+
+            return defaultResolver.Resolve(nodeEvent, ref currentType);
+        }
+    }
+
     /// <summary>
     /// ユースケースリーダー
     /// </summary>
@@ -62,8 +104,12 @@ namespace East.Tool.UseCaseTranslator.Controllers
             UseCaseCatalog catalog = null;
 
             var lastUpdateTime = catalogLastUpdateTime;
-			var deserializer = new Deserializer(null, new CamelCaseNamingConvention(), false);
-			var asYaml = deserializer.Deserialize(reader) as Dictionary<object, object>;
+            var deserializer = new DeserializerBuilder()
+                                .WithNamingConvention(new CamelCaseNamingConvention())
+                                .WithNodeTypeResolver(new CustomNodeTypeResolver())
+                                .IgnoreUnmatchedProperties()
+                                .Build();
+            var asYaml = deserializer.Deserialize<ValueOverwriteDisallowDictionary<object, object>>(reader);
 
             Contract.Assert(asYaml != null);
             if (asYaml.ContainsKey("ユースケースシナリオカタログ")) {
@@ -90,9 +136,9 @@ namespace East.Tool.UseCaseTranslator.Controllers
 
                     try {
                         using (var scenarioReader = new StreamReader(path)) {
-                            var scenarioSetAsYaml = deserializer.Deserialize(scenarioReader);
+                            var scenarioSetAsYaml = deserializer.Deserialize<ValueOverwriteDisallowDictionary<object, object>>(scenarioReader);
                             Contract.Assert(scenarioSetAsYaml != null);
-            		        scenarioSet.Add(new KeyValuePair<string, Dictionary<object, object>>(Path.GetFileName(path), scenarioSetAsYaml as Dictionary<object, object>));
+            		        scenarioSet.Add(new KeyValuePair<string, Dictionary<object, object>>(Path.GetFileName(path), scenarioSetAsYaml.AsDictionary));
                         }
                     }
                     catch (YamlException e) {
@@ -106,15 +152,15 @@ namespace East.Tool.UseCaseTranslator.Controllers
 
                 var updateHistory = new List<UseCaseUpdateInfo>();
                 if (asYaml.ContainsKey("更新履歴")) {
-                    updateHistory.AddRange((asYaml["更新履歴"] as Dictionary<object, object>).Select(history => UseCaseUpdateInfo.CreateInstance(history)));
+                    updateHistory.AddRange((asYaml["更新履歴"] as ValueOverwriteDisallowDictionary<object, object>).AsDictionary.Select(history => UseCaseUpdateInfo.CreateInstance(history)));
                     asYaml.Remove("更新履歴");
                 }
 
-                catalog = new UseCaseCatalog(catalogFileName, lastUpdateTime, title, scenarioSet, updateHistory, asYaml);
+                catalog = new UseCaseCatalog(catalogFileName, lastUpdateTime, title, scenarioSet, updateHistory, asYaml.AsDictionary);
             }
             else if (asYaml.ContainsKey("ユースケースシナリオセット")) {
                 // 自身がシナリオセット
-                catalog = new UseCaseCatalog(new List<KeyValuePair<string, Dictionary<object, object>>> { new KeyValuePair<string, Dictionary<object, object>>(catalogFileName, asYaml) });
+                catalog = new UseCaseCatalog(new List<KeyValuePair<string, Dictionary<object, object>>> { new KeyValuePair<string, Dictionary<object, object>>(catalogFileName, asYaml.AsDictionary) });
             }
 
             return catalog;

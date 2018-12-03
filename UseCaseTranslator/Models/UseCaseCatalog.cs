@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using East.Tool.UseCaseTranslator.Utilities;
 
 using System.Diagnostics.Contracts;
 
@@ -25,7 +26,7 @@ namespace East.Tool.UseCaseTranslator.Models
         {
             var title = updateInfo.Key as string;
 
-            var values = updateInfo.Value as Dictionary<object, object>;
+            var values = updateInfo.Value as ValueOverwriteDisallowDictionary<object, object>;
 
             const string FIELD_DATE = "更新日";
             if (values.ContainsKey(FIELD_DATE) == false) {
@@ -308,11 +309,11 @@ namespace East.Tool.UseCaseTranslator.Models
                         break;
 
                     case "シナリオ":
-                        scenarios = (pair.Value as IEnumerable<object>).Select(scenarioAsYaml => UseCaseScenario.CreateInstance(scenarioAsYaml as Dictionary<object, object>));
+                        scenarios = (pair.Value as IEnumerable<object>).Select(scenarioAsYaml => UseCaseScenario.CreateInstance((scenarioAsYaml as ValueOverwriteDisallowDictionary<object, object>).AsDictionary));
                         break;
 
                     case "更新履歴":
-                        updateHistory.AddRange((pair.Value as Dictionary<object, object>).Select(history => UseCaseUpdateInfo.CreateInstance(history)));
+                        updateHistory.AddRange(((pair.Value as ValueOverwriteDisallowDictionary<object, object>).AsDictionary).Select(history => UseCaseUpdateInfo.CreateInstance(history)));
                         break;
 
                     default:
